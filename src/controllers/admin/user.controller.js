@@ -42,7 +42,7 @@ const authUser = (req, res) => {
             }
             if (user) {
                 if (user.authenticate(req.body.password) && user.role === 'admin') {
-                    const token = jwt.sign({id: user._id}, process.env.JWT_SCRT_KEY, {expiresIn: '30d'});
+                    const token = jwt.sign({id: user._id, role: user.role}, process.env.JWT_SCRT_KEY, {expiresIn: '30d'});
                     const {_id, firstName, lastName, username, email, phone, password, role} = user;
                     res.status(200).json({token, user: {_id, firstName, lastName, username, email, phone, password, role}});
                 } else {

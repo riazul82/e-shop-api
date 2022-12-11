@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const createUser = async (req, res) => {
+    
     try {
         const userName = await User.findOne({ username: req.body.username });
         const userEmail = await User.findOne({ email: req.body.email });
@@ -55,11 +56,4 @@ const authUser = (req, res) => {
     }
 }
 
-const requireLogin = (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    const user = jwt.verify(token, process.env.JWT_SCRT_KEY);
-    req.user = user;
-    next();
-}
-
-module.exports = { createUser, authUser, requireLogin };
+module.exports = { createUser, authUser };
